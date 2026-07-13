@@ -3,3 +3,9 @@ _pycache_/
 *.pyc
 reporte_*.txt
 
+.bash_history
+.cache/
+*.txt
+*.log
+logs/
+.env
