@@ -8,4 +8,4 @@ reporte_*.txt
 *.txt
 *.log
 logs/
-.env
+alertas.log
