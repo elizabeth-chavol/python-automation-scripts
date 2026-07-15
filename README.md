@@ -27,6 +27,10 @@ bash ejecutar_soc.sh
 Clase 5: Mejora
 Se agregó envío de alertas por correo usando smtplib y variables de entorno seguras.
 
+Clase 6: Evidencia y Seguridad
+Se agregó guardado de evidencias en alertas.log como fecha y hora.
+Se implementó .gitignore para proteger .env y logs. Detector SOC completo.
+
 Autor
 Proyecto del curso de SOC Analyst - Nivel 3
 
