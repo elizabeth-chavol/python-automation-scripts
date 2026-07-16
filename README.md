@@ -1,48 +1,48 @@
-SOC Detector - Termux
+# SOC Detector - Termux
 
 Proyecto de Ciberseguridad desarrollado en Termux para Android.
 
-Descripción
-Detector de intentos de ataque por fuerza bruta que lee logs en tiempo real y envía alertas por correo electrónico cuando detecta más de 3 intentos fallidos desde la misma IP.
+**Descripción:** Detector de intentos de ataque por fuerza bruta que lee logs en tiempo real, extrae IPs atacantes y automatiza bloqueos en el firewall.
 
-Tecnologías Usadas
-- Python 3
-- Termux en Android
-- SMTP Gmail
-- Variables de entorno con python-dotenv
+---
 
-Cómo Ejecutar
+## 🛠️ Tecnologías Usadas
 
-1. Instalar dependencia:
-pip install python-dotenv
+* **Python 3**
+* **Termux** en Android
+* **SMTP** Gmail
+* **IPTables** (Firewall)
+* Variables de entorno con **python-dotenv**
 
-2. Configurar credenciales:
-Copiar .env.example a .env y poner tu correo y contraseña de aplicación de Gmail.
+---
 
-3. Ejecutar:
-python detector_alertas.py
-o con el script:
-bash ejecutar_soc.sh
+## 🚀 Cómo Ejecutar
 
-Clase 5: Mejora
-Se agregó envío de alertas por correo usando smtplib y variables de entorno seguras.
+1. **Instalar dependencias:**
+   ```bash
+   pip install python-dotenv
 
-Clase 6: Evidencia y Seguridad
-Se agregó guardado de evidencias en alertas.log como fecha y hora.
-Se implementó .gitignore para proteger .env y logs. Detector SOC completo.
+3. **Ejecutar el detector:**
+   ```bash
+   python detector_alertas.py
 
-Autor
-Proyecto del curso de SOC Analyst - Nivel 3
+
+
+---
+
+## 📈 Historial de Clases e Incrementos
+
+* **Clase 5:** Envío de alertas por correo usando `smtplib` y variables `.env`.
+* **Clase 6:** Registro local en `alertas.log` y configuración de `.gitignore`.
+* **Clase 7:** Extracción de IPs con `re` y bloqueo en firewall con `iptables` y `subprocess`.
+
+---
 
 ### 📂 Estructura del Proyecto y Archivos
 
-| Archivo 📄 | ¿Para qué sirve? (En lenguaje humano) 💡 | Conceptos clave que utiliza 🛠️ |
+| Archivo 📄 | ¿Para qué sirve? 💡 | Conceptos clave 🛠️ |
 | :--- | :--- | :--- |
-| `detector_alertas.py` | El "guardia de seguridad". Revisa los logs cada 1 minuto, guarda evidencia de ataques con hora exacta y manda un mail de alerta. | `while True` (bucle), `datetime` (tiempo), `smtplib` (correo). |
-| `alertas.log` | La "caja de evidencias". Archivo local donde se registran de forma permanente los incidentes detectados. | Escritura en modo "append" (`a`) para no borrar lo anterior. |
-| `.gitignore` | El "tacho de basura con tapa". Evita que archivos confidenciales (como `.env` o registros temporales) se suban de forma pública. | Filtros de exclusión de Git. |
-
-### 🔍 Ejemplo de Evidencia Registrada (`alertas.log`)
-Cuando el script detecta un intento de intrusión, no solo envía el correo, sino que genera un registro en el archivo local con este formato:
-
-`[2026-07-15 16:45:00] ALERTA: Intento de ataque por fuerza bruta detectado.`
+| `detector_alertas.py` | Guardia activo. Revisa logs, extrae IP, bloquea y avisa. | `re`, `subprocess`, `try/except`. |
+| `ataques.log` | Puerta de entrada. Simulación de intentos de acceso. | Lectura de archivos (`r`). |
+| `alertas.log` | Caja de evidencias. Registro de incidentes. | Escritura append (`a`). |
+| `.gitignore` | Tacho con tapa. Evita subir contraseñas. | Filtros de exclusión. |
