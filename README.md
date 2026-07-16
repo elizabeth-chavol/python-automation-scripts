@@ -34,3 +34,15 @@ Se implementó .gitignore para proteger .env y logs. Detector SOC completo.
 Autor
 Proyecto del curso de SOC Analyst - Nivel 3
 
+### 📂 Estructura del Proyecto y Archivos
+
+| Archivo 📄 | ¿Para qué sirve? (En lenguaje humano) 💡 | Conceptos clave que utiliza 🛠️ |
+| :--- | :--- | :--- |
+| `detector_alertas.py` | El "guardia de seguridad". Revisa los logs cada 1 minuto, guarda evidencia de ataques con hora exacta y manda un mail de alerta. | `while True` (bucle), `datetime` (tiempo), `smtplib` (correo). |
+| `alertas.log` | La "caja de evidencias". Archivo local donde se registran de forma permanente los incidentes detectados. | Escritura en modo "append" (`a`) para no borrar lo anterior. |
+| `.gitignore` | El "tacho de basura con tapa". Evita que archivos confidenciales (como `.env` o registros temporales) se suban de forma pública. | Filtros de exclusión de Git. |
+
+### 🔍 Ejemplo de Evidencia Registrada (`alertas.log`)
+Cuando el script detecta un intento de intrusión, no solo envía el correo, sino que genera un registro en el archivo local con este formato:
+
+`[2026-07-15 16:45:00] ALERTA: Intento de ataque por fuerza bruta detectado.`
