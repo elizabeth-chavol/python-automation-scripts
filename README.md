@@ -46,6 +46,5 @@ Proyecto de Ciberseguridad desarrollado en Termux para Android.
 | `ataques.log` | Puerta de entrada. Simulación de intentos de acceso. | Lectura de archivos (`r`). |
 | `alertas.log` | Caja de evidencias. Registro de incidentes. | Escritura append (`a`). |
 | `.gitignore` | Tacho con tapa. Evita subir contraseñas. | Filtros de exclusión. |
-
 | `dashboard.py` | Panel web con Flask para ver las alertas en tiempo real. | `Flask`, `HTML/CSS`. |
 
