@@ -5,6 +5,7 @@ app = Flask(__name__)
 def dashboard():
     with open('alertas.log', 'r') as f:
         alertas = f.readlines()
+        alertas = alertas[::-1]
 
     criticas = 0
     medias = 0
@@ -27,9 +28,11 @@ def dashboard():
     </head>
     <body>
     <h1>DASHBOARD SOC</h1>
-            <h2 style="color:#ff0000">CRITICAS: {criticas}</h2>
-            <h2 style="color:#ffcc00">MEDIA: {medias}</h2>
-            <h2 style="color:white">TOTAL: {total}</h2>
+        '<a href="/borrar" style="color:red; border:1px solid red; padding:5px; text-decoration:none;">BORRAR TODAS LAS ALERTAS</a>'
+        '<h2 style="color:#ff0000">CRITICAS: {criticas}</h2>'
+        <h2 style="color:#ff0000">CRITICAS: {criticas}</h2>
+        <h2 style="color:#ffcc00">MEDIA: {medias}</h2>
+        <h2 style="color:white">TOTAL: {total}</h2>
     '''
 
     for alerta in alertas:
@@ -50,6 +53,11 @@ def dashboard():
 
     html += '</body></html>'
     return render_template_string(html)
+
+@app.route('/borrar')
+def borrar():
+    open('alertas.log', 'w').close()
+    return "Alertas borradas. <a href='/'>Volver</a>"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
