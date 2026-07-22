@@ -48,3 +48,10 @@ Proyecto de Ciberseguridad desarrollado en Termux para Android.
 | `.gitignore` | Tacho con tapa. Evita subir contraseñas. | Filtros de exclusión. |
 | `dashboard.py` | Panel web con Flask para ver las alertas en tiempo real. | `Flask`, `HTML/CSS`. |
 
+## 🏷️ Historial de Versiones (Tags)
+
+El proyecto utiliza tags de Git para documentar la evolución del dashboard web (`dashboard.py`):
+
+* **`v1.1.0` (Versión inicial):** Estructura base del panel web con Flask y renderizado de alertas sin formato avanzado.
+* **`v1.2.0` (Lógica y Métricas):** Incorporación de conteo de alertas (Críticas, Medias, Totales), recortador de texto (*slicing*) y estilos dinámicos en HTML.
+* **`v1.3.0` (Versión Actual en `main`):** Integración completa del dashboard refactorizado y preparado para auto-refresco.
