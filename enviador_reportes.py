@@ -4,6 +4,8 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+RUTA_BASE = os.path.dirname(os.path.abspath(__file__))
+fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
 # Cargar variables del archivo .env
 load_dotenv()
@@ -14,8 +16,8 @@ print("=== ENVIADOR AUTOMATICO DE REPORTES SOC ===")
 EMAIL_REMITENTE = "elizabeth.chavol.infosec@gmail.com"
 EMAIL_DESTINO = "elizabeth.chavol.infosec@gmail.com"
 PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
-ARCHIVO_REPORTE = "reporte_clase3.txt"
-ASUNTO = f"REPORTE SOC - {datetime.now().strftime('%Y-%m-%d')}"
+ARCHIVO_REPORTE = os.path.join(RUTA_BASE,f"reporte_{fecha_hoy}.txt")
+ASUNTO = f"REPORTE SOC - {fecha_hoy}"
 
 def enviar_reporte():
     try:

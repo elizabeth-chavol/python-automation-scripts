@@ -1,10 +1,11 @@
 import datetime 
 import random
+fecha_hoy = datetime.datetime.now().strftime("%Y-%m-%d")
 
 print("=== ANALIZADOR + REPORTE AUTOMATICO ===")
 
 # 1. Primero generamos log nuevo para esta clase
-with open("ataques_clase3.log", "w") as log:
+with open(f"ataques_{fecha_hoy}.log", "w") as log:
     for ronda in range(1, 6):
         intentos = random.randint(8, 16)
         ip = f"10.0.0.{random.randint(100, 110)}"
@@ -16,7 +17,7 @@ lineas_reporte.append("=== REPORTE DE SEGURIDAD SOC ===\n")
 lineas_reporte.append(f"Fecha: {datetime.datetime.now()}\n")
 lineas_reporte.append("Analista: Elizabeth\n")
 
-with open("ataques_clase3.log", "r") as log_lectura:
+with open(f"ataques_{fecha_hoy}.log", "r") as log_lectura:
     for linea in log_lectura:
         linea = linea.strip()
         if "Ronda" in linea:
@@ -36,7 +37,10 @@ with open("ataques_clase3.log", "r") as log_lectura:
             lineas_reporte.append(normal)
 
 #Guardar todo de una
-with open("reporte_clase3.txt", "w") as reporte:
+from datetime import datetime
+fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+with open(f"reporte_{fecha_hoy}.txt", "w") as reporte:
     reporte.writelines(lineas_reporte)
 
-print("\n=== REPORTE GUARDADO EN reporte_clase3.txt ===")
+print(f"\n=== REPORTE GUARDADO EN reporte_{fecha_hoy}.txt ===")

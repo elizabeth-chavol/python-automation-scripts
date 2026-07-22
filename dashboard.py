@@ -1,48 +1,55 @@
 from flask import Flask, render_template_string
-import os
-
 app = Flask(__name__)
-LOG_FILE = "alertas.log"
-
-HTML = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SOC Dashboard v1</title>
-    <meta http-equiv="refresh" content="5">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { background: #0a0a0a; color: #00ff00; font-family: monospace; padding: 10px; margin: 10px 0; }
-        h1 { color: #ff0000; text-align: center; }
-        .alerta { background: #1a1a1a; border-left: 4px solid red; padding: 10px; margin: 10px 0; }
-        .fecha { color: #888; font-size: 12px; }
-    </style>
-</head>
-<body>
-    <h1>:rotating_light: SOC DASHBOARD - ELIZABETH :rotating_light:</h1>
-    {% if alertas %}
-        {% for alerta in alertas %}
-        <div class="alerta">
-            <div class="fecha">{{ alerta.split(' - ')[0] }}</div>
-            <div>{{ alerta.split(' - ')[1] }}</div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <p>No hay alertas. Todo tranquilo &#9989;</p>
-    {% endif %}
-</body>
-</html>
-"""
 
 @app.route('/')
 def dashboard():
-    alertas = []
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, 'r') as f:
-            alertas = f.readlines()
-    return render_template_string(HTML, alertas=alertas)
+    with open('alertas.log', 'r') as f:
+        alertas = f.readlines()
+
+    criticas = 0
+    medias = 0
+    total = 0
+
+    for linea in alertas:
+        total += 1
+        if "CRITICA" in linea:
+            criticas += 1
+        elif "MEDIA" in linea:
+            medias += 1
+
+    html = f'''
+    <html><head><style>
+    body {{background: #1a1a1a; color: white; font-family: Arial;}}
+    .alerta {{padding: 10px; margin: 10px; background: #2a2a2a;}}
+    .fecha {{color: #888; font-size:12px;}}
+    </style>
+    <meta http-equiv="refresh" content="5">
+    </head>
+    <body>
+    <h1>DASHBOARD SOC</h1>
+            <h2 style="color:#ff0000">CRITICAS: {criticas}</h2>
+            <h2 style="color:#ffcc00">MEDIA: {medias}</h2>
+            <h2 style="color:white">TOTAL: {total}</h2>
+    '''
+
+    for alerta in alertas:
+        if 'CRITICA' in alerta:
+            color = '#ff0000'
+            criticas = criticas + 1
+        else:
+            color = '#ffcc00'
+            medias = medias + 1
+
+        total = total + 1
+
+        fecha = alerta[1:20]
+        texto = alerta[22:]
+        html += f'<div class="alerta" style="border-left: 5px solid {color}">'
+        html += f'<div class="fecha">{fecha}</div>'
+        html += f'<div>{texto}</div></div>'
+
+    html += '</body></html>'
+    return render_template_string(html)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
-
+    app.run(host='0.0.0.0')
