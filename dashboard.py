@@ -11,47 +11,45 @@ def dashboard():
     medias = 0
     total = 0
 
-    for linea in alertas:
-        total += 1
-        if "CRITICA" in linea:
-            criticas += 1
-        elif "MEDIA" in linea:
-            medias += 1
-
-    html = f'''
-    <html><head><style>
-    body {{background: #1a1a1a; color: white; font-family: Arial;}}
-    .alerta {{padding: 10px; margin: 10px; background: #2a2a2a;}}
-    .fecha {{color: #888; font-size:12px;}}
-    </style>
-    <meta http-equiv="refresh" content="5">
-    </head>
-    <body>
-    <h1>DASHBOARD SOC</h1>
-        '<a href="/borrar" style="color:red; border:1px solid red; padding:5px; text-decoration:none;">BORRAR TODAS LAS ALERTAS</a>'
-        '<h2 style="color:#ff0000">CRITICAS: {criticas}</h2>'
-        <h2 style="color:#ff0000">CRITICAS: {criticas}</h2>
-        <h2 style="color:#ffcc00">MEDIA: {medias}</h2>
-        <h2 style="color:white">TOTAL: {total}</h2>
-    '''
-
+    alertas_html = ""
     for alerta in alertas:
         if 'CRITICA' in alerta:
             color = '#ff0000'
-            criticas = criticas + 1
-        else:
+            criticas += 1
+        elif 'MEDIA' in alerta:
             color = '#ffcc00'
-            medias = medias + 1
+            medias += 1
+        else:
+            color = 'white'
 
-        total = total + 1
+        total += 1
 
-        fecha = alerta[1:20]
-        texto = alerta[22:]
-        html += f'<div class="alerta" style="border-left: 5px solid {color}">'
-        html += f'<div class="fecha">{fecha}</div>'
-        html += f'<div>{texto}</div></div>'
+        fecha = alerta[1:17].strip()
+        texto = alerta[19:].strip()
+        alertas_html += f'<div class="alerta" style="border-left: 5px solid {color}>'
+        alertas_html += f'<div class="fecha">{fecha}</div>'
+        alertas_html += f'<div>{texto}</div></div>'
 
-    html += '</body></html>'
+    html = f"""
+    <html><head><style>
+    body {{background: #1a1a1a; color: white; font-family: Arial; padding: 5px; margin :0;}}
+    .alerta {{padding: 10px; margin: 10px 0; background: #2a2a2a; word-wrap: break-word; overflow-wrap: break-word;}}
+    .fecha {{color: #888; font-size:12px;}}
+    h1, h2 {{font-size: 16px; margin: 5px 0;}}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="10">
+    </head><body>
+    <h1>DASHBOARD SOC</h1>
+        <a href="/borrar" style="color:red; border:1px solid red; padding:5px; text-decoration:none;">BORRAR TODAS LAS ALERTAS</a>
+        <h2 style="color:#ff0000">CRITICAS: {criticas}</h2>
+        <h2 style="color:#ffcc00">MEDIA: {medias}</h2>
+        <h2 style="color:white">TOTAL: {total}</h2>
+        <h2>ULTIMAS ALERTAS:</h2> 
+   """
+
+    html += alertas_html
+    html += "</body></html>"
     return render_template_string(html)
 
 @app.route('/borrar')
